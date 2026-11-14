@@ -2,7 +2,15 @@
 
 **Create readable interfaces. Find and fix visual accessibility barriers.**
 
-An on-demand skill for developers, designers, and coding agents. Create color palettes, review web and app interfaces, and improve the readability of your editor or terminal. Preview changes and verify them with the available tools.
+A color palette is part of how an interface works. Together with typography, spacing, icons, and focus indicators, it determines whether people can read content, distinguish controls, understand a chart, or notice an error. IDEs, applications, and operating systems often present themes as a matter of personal taste. Appearance matters, but a theme also determines whether an interface is comfortable to use or difficult to read, especially for people with low vision or differences in color perception.
+
+Making those choices well takes knowledge and time. Before AI-assisted development, researching accessibility guidance, comparing color combinations, implementing changes, and checking every state required more manual work. Not every developer or product designer had specialist training or the resources to do it thoroughly. Those constraints were real, even though users still needed readable interfaces.
+
+AI can now help bring that work into the everyday development process. Agents can inspect styles, propose palettes, measure contrast, update shared components, and run repeatable checks. Readability and accessibility should be standard requirements in every digital product, with routine checks automated wherever possible, rather than optional polish or a special theme users must find and enable. Automation does not guarantee accessibility: the result still needs verification in the actual interface and feedback from the people who use it.
+
+This repository helps any developer put that approach into practice and build interfaces that more people can read and use. The goal is to make accessible design easier to apply from the start and maintain as a product changes, without requiring every developer to become an accessibility specialist.
+
+The on-demand skill supports developers, designers, and coding agents. Create color palettes, review web and app interfaces, and improve the readability of your editor or terminal. Preview changes and verify them with the available tools.
 
 [Get started](#get-started) · [Create or review](#create-or-review) · [Guide](GUIDE.md) · [Contribute](#contribute)
 
