@@ -1,6 +1,6 @@
 # Accessibility
 
-**Create readable interfaces. Find and fix visual accessibility barriers.**
+**Build readable products. Offer useful visual adjustments. Adapt personal environments.**
 
 A color palette is part of how an interface works. Together with typography, spacing, icons, and focus indicators, it determines whether people can read content, distinguish controls, understand a chart, or notice an error. IDEs, applications, and operating systems often present themes as a matter of personal taste. Appearance matters, but a theme also determines whether an interface is comfortable to use or difficult to read, especially for people with low vision or differences in color perception.
 
@@ -8,11 +8,27 @@ Making those choices well takes knowledge and time. Before AI-assisted developme
 
 AI can now help bring that work into the everyday development process. Agents can inspect styles, propose palettes, measure contrast, update shared components, and run repeatable checks. Readability and accessibility should be standard requirements in every digital product, with routine checks automated wherever possible, rather than optional polish or a special theme users must find and enable. Automation does not guarantee accessibility: the result still needs verification in the actual interface and feedback from the people who use it.
 
-This repository helps any developer put that approach into practice and build interfaces that more people can read and use. The goal is to make accessible design easier to apply from the start and maintain as a product changes, without requiring every developer to become an accessibility specialist.
+This repository helps developers put that approach into practice and helps people adapt the tools they use. The goal is to make accessible design easier to apply from the start, maintain it as a product changes, and connect personal adjustments to the tasks that are difficult to see or perform.
 
-The on-demand skill supports developers, designers, and coding agents. Create color palettes, review web and app interfaces, and improve the readability of your editor or terminal. Preview changes and verify them with the available tools.
+The on-demand skill is a dependency-free set of instructions and references for developers, designers, users, and coding agents. It is not a browser overlay or a medical assessment. It guides work through the available platform tools; it does not itself control a monitor or operating system.
 
-[Get started](#get-started) · [Create or review](#create-or-review) · [Guide](GUIDE.md) · [Contribute](#contribute)
+[Get started](#get-started) · [Choose your use case](#choose-your-use-case) · [Create or review](#create-or-review) · [Guide](GUIDE.md) · [Visual needs](references/visual-needs.md) · [Evidence](references/visual-evidence.md) · [Contribute](#contribute)
+
+## Choose your use case
+
+There are two audiences. Developers have two distinct kinds of work:
+
+| Audience and route | Goal | Deliverable |
+| --- | --- | --- |
+| **Developer: accessible defaults** | Make the app or website readable and operable in its ordinary experience. | Applicable checks, focused implementation changes, and evidence across relevant states. |
+| **Developer: optional personalization** | When wanted, let users adapt presentation to differing visual needs. | Supported independent adjustments, a usable configurator or settings UI, faithful previews, restoration, and integration checks. |
+| **Person: personal environment** | Make an existing working environment easier to see and use. | Supported screen, OS, browser, and app adjustments at the appropriate layer, with a task trial and restoration. |
+
+Optional personalization does not replace accessible defaults, and not every product needs its own theme editor. Existing browser, OS, and application preferences may already supply an adjustment. The skill first identifies the target and capability rather than prescribing a particular implementation.
+
+Start from a **functional difficulty**, such as reading small comments, distinguishing a failed task, locating a field boundary, tolerating a luminous surface, or recovering the caret. Keep luminance, polarity, text contrast, control boundaries, color differentiation, scale, and motion distinct when their effects serve different needs. Do not assign a theme from a diagnosis or a population statistic.
+
+The result follows **need → supported adjustment → applied result → technical check → task/comfort outcome → restoration**. A contrast pass, an aesthetic preference, and a useful personal adjustment are different forms of evidence. Subjective comfort matters, but a quick comparison cannot establish all-day benefit.
 
 ## Get started
 
@@ -68,9 +84,9 @@ For a project-only installation, place the full skill folder under the target pr
 | Grok Build | `.grok/skills/accessibility/` |
 | Pi | `.pi/skills/accessibility/` |
 
-Copy the five project files while preserving the folder layout. Keep the target project's existing instructions. Project trust and local settings may affect discovery.
+Copy the full repository contents, including `references/` and `agents/`, while preserving the folder layout. Keep the target project's existing instructions. Project trust and local settings may affect discovery.
 
-Without skill discovery, give your agent access to `SKILL.md` and `GUIDE.md` and explicitly ask it to follow them for the task. A repository URL alone does not load their contents. You can also follow [GUIDE.md](GUIDE.md) directly for a developer-led review.
+Without skill discovery, give your agent access to the full repository and explicitly ask it to read `SKILL.md` and follow its links for the task. A repository URL alone does not load their contents. You can also follow [GUIDE.md](GUIDE.md) directly for a developer-led review.
 
 </details>
 
@@ -84,6 +100,8 @@ Without skill discovery, give your agent access to `SKILL.md` and `GUIDE.md` and
 A palette, component, screen, or personal theme can be a complete task. For an existing product, review its real use within the agreed scope: page/screen families, components, themes, and states. Shared styles can resolve issues across many elements. Rechecking changes is part of the same workflow.
 
 Name what you want reviewed: the product you develop, or the tools you use. Reviewing an editor's appearance concerns personal preferences, not the application open in that editor. The skill infers the context from your request.
+
+For implementation requests, the agent should complete the authorized work and relevant checks. A review-only prompt can deliberately ask for a proposal first; the skill does not require an extra approval step for changes already requested.
 
 <details>
 <summary><strong>Create a color palette</strong></summary>
@@ -134,6 +152,41 @@ See [applications and personal workspace](GUIDE.md#applications-and-personal-wor
 </details>
 
 <details>
+<summary><strong>Adapt an operating system, browser, and apps</strong></summary>
+
+```text
+Use accessibility to help me read and find controls in my working
+environment. The bright surfaces are uncomfortable and field boundaries
+are hard to distinguish. Inspect the available screen, OS, browser, and
+app settings. Use the appropriate layer and keep these needs separate.
+Apply the supported personal changes within this request, preserve
+unrelated settings, and record how to restore them. Compare representative
+tasks and distinguish technical checks from my feedback after a trial.
+```
+
+The agent records what it can actually inspect or change. It does not infer physical luminance or a diagnosis from a screenshot. See [Visual needs](references/visual-needs.md).
+
+</details>
+
+<details>
+<summary><strong>Build or improve a visual-settings extension</strong></summary>
+
+```text
+Use accessibility to implement visual personalization for this app.
+Read the current app and extension contracts before choosing a design.
+Keep the default experience accessible; offer only useful additional
+adjustments. Support functional needs, faithful comparisons, direct later
+settings, reversible trials, persistence, and restoration. Prefer current
+host APIs and remove obsolete workarounds after verifying their purpose.
+Implement and test the changes, and report token calculations, rendered
+behavior, and user-trial outcomes separately. Do not claim untested results.
+```
+
+Read [Personalization implementation](references/personalization.md). These instructions are intended to work without a previous conversation or a list of historical bugs. [Evaluation scenarios](references/evaluations.md) describe how to check that behavior in fresh contexts.
+
+</details>
+
+<details>
 <summary><strong>Apply an approved plan</strong></summary>
 
 After reviewing the proposal:
@@ -173,13 +226,17 @@ See the [report format](GUIDE.md#report) and [preview instructions](GUIDE.md#pre
 
 ## Scope
 
-Accessibility covers **visual interfaces and personal appearance settings**: color and contrast, typography, scaling, layout, focus, controls, charts, and display preferences. Related keyboard, image-alternative, and form checks are included when relevant.
+Accessibility covers **visual interfaces, optional visual personalization, and personal visual environments**: color and contrast, typography, scaling, layout, focus, controls, charts, display preferences, and supported screen/OS/browser/app adjustments. Related keyboard, image-alternative, and form checks are included when relevant.
 
-For websites, use the web checklist. For desktop and mobile apps, use the shared visual guidance with platform-appropriate checks. For personal tools, propose supported theme and text settings with a way to restore them. App limitations outside those settings remain visible in the report.
+For websites, use the web checklist. For desktop and mobile apps, use the shared visual guidance with platform-appropriate checks. For personal environments, identify the need and supported capability, preserve prior settings, and test representative use. For configurators and extensions, inspect the current host version, actual components, lifecycle, and effective settings. Unsupported needs remain visible in the report.
 
 Designs show intended presentation; source or theme files reveal configured values; a running interface allows interaction checks. Supplied mobile screenshots can support a limited review without connecting a device. The report identifies inspected screens, states, themes, versions, and gaps.
 
-The guide draws on selected WCAG 2.2 criteria, non-web interpretation guidance, and practical recommendations. Findings do not establish whole-product conformance or certification. Full native-app evaluation needs platform-specific testing; system-wide setup, hardware, audio, and documents are outside this scope.
+The guide draws on selected WCAG 2.2 criteria, non-web interpretation guidance, functional user needs, and practical recommendations. Findings do not establish whole-product conformance or certification. Full native-app evaluation needs platform-specific testing. General system administration, hardware repair, clinical diagnosis/treatment, audio accessibility, and document accessibility are outside this visual scope. Physical luminance, glare, or panel-flicker measurements require appropriate access and methods; a theme change cannot establish them.
+
+### Educational evidence
+
+[Visual evidence](references/visual-evidence.md) explains relevant conditions and traits, selected prevalence estimates, their populations and dates, and evidence limits. Prevalence is not incidence, symptom prevalence is not a disability rate, and overlapping estimates must not be added. The reference informs coverage and education; it does not predict which setting an individual needs or how many users will prefer a theme.
 
 ## Files
 
@@ -188,6 +245,10 @@ The guide draws on selected WCAG 2.2 criteria, non-web interpretation guidance, 
 | [README.md](README.md) | Installation, examples, and contribution guidance. |
 | [SKILL.md](SKILL.md) | Activation metadata, workflow, evidence requirements, and implementation boundaries. |
 | [GUIDE.md](GUIDE.md) | Checks, color proposals, examples, report format, and references. |
+| [references/visual-needs.md](references/visual-needs.md) | Functional difficulties, independent adjustments, four environment layers, and task validation. |
+| [references/personalization.md](references/personalization.md) | Implementation and verification of settings, configurators, and host extensions. |
+| [references/visual-evidence.md](references/visual-evidence.md) | Educational evidence and prevalence with population, date, sources, and uncertainty. |
+| [references/evaluations.md](references/evaluations.md) | Fresh-context evaluation scenarios and evidence-recording method. |
 | [agents/openai.yaml](agents/openai.yaml) | Codex invocation policy. |
 | [LICENSE](LICENSE) | MIT license. |
 
@@ -195,12 +256,16 @@ The guide draws on selected WCAG 2.2 criteria, non-web interpretation guidance, 
 
 Open an [issue](https://github.com/antorome/accessibility/issues) for a reproducible problem, a question, or a missing user need. Submit a focused pull request for an improvement. Contributions from people who use assistive technology are especially welcome.
 
-Keep documentation in English. Keep workflow instructions in `SKILL.md`, technical guidance in `GUIDE.md`, and installation and maintenance instructions here. Improve existing sections before adding files. Keep task-specific previews and reports with their reviews and preserve licensing and attribution requirements when reusing material.
+Keep documentation in English. Keep routing and workflow in `SKILL.md`, technical checks in `GUIDE.md`, focused task references in `references/`, and installation and maintenance instructions here. Link every task reference directly from `SKILL.md` and load it only when relevant. Improve existing sections before adding files. Keep task-specific previews and reports with their reviews and preserve licensing and attribution requirements when reusing material.
 
 For a changed check, include the user need, a primary source, when it applies, a failing example, a corrected example, and a verification method. Explain what you tested and remove private data. Check links, anchors, thresholds, exceptions, and example instructions before submitting. Update source-review dates only for references actually rechecked.
 
+For a changed adaptation workflow, use relevant [evaluation scenarios](references/evaluations.md), including a fresh-context task with raw artifacts and no leaked findings. Keep evaluation specifications separate from actual results. For prevalence, retain the original population, definition, date, uncertainty, and source; do not infer market size or a clinical recommendation from it.
+
 For a packaging change, validate the YAML and relative references, then check discovery, explicit invocation, and the absence of implicit activation in the affected environment. Report the client version and distinguish executed tests from documentation review.
 
-Project-level discovery has been tested in Claude Code 2.1.319 and Codex CLI 0.163.0: explicit invocation loaded `SKILL.md` and `GUIDE.md` from the project folder, and an unrelated request did not activate the skill. Cursor, Grok Build, and Pi have not been tested yet.
+Some generic skill validators do not recognize the platform-specific `disable-model-invocation` field. Check it against the linked client documentation and validate the rest of the structure separately; do not remove explicit-invocation policy merely to satisfy a narrower validator. Preserve `agents/openai.yaml` for Codex's policy.
+
+Historical project-level discovery checks for the earlier five-file package used Claude Code 2.1.319 and Codex CLI 0.163.0: explicit invocation loaded `SKILL.md` and `GUIDE.md` from the project folder, and an unrelated request did not activate the skill. These are not a re-test of the expanded reference package. Re-run affected client checks when packaging changes. Cursor, Grok Build, and Pi have not been tested here.
 
 Maintained by [antorome](https://github.com/antorome) and contributors. Original material is [MIT licensed](LICENSE). Referenced standards retain their own terms.

@@ -1,12 +1,14 @@
 # Practical guide
 
-Create a visual foundation, review an existing interface, and verify improvements. Use this guide to choose checks, propose changes, and record the evidence.
+Create a visual foundation, review an existing interface, and verify improvements. Use this guide for technical checks and evidence. For needs-led adaptation read [Visual needs](references/visual-needs.md); when building settings or an extension also read [Personalization implementation](references/personalization.md). Educational prevalence and its limits live in [Visual evidence](references/visual-evidence.md).
 
 [Scope and evidence](#scope-and-evidence) · [Colors and previews](#colors-and-previews) · [Review checklist](#review-checklist) · [Apps and workspace](#applications-and-personal-workspace) · [Report](#report) · [Review methods and references](#review-methods-and-references)
 
 ## Scope and evidence
 
 Establish the task from the available context. Identify whether the target is a product being developed or the user's personal tools, then record the platform, requested coverage, material, and permitted changes. A palette, component, or single screen is a valid scope. The agent's host and open repository do not select the target.
+
+For developers, distinguish **accessible defaults** from **optional advanced personalization**. The default experience needs the applicable technical checks; an optional mode must not be the only place essential text, focus, and status meaning become usable. Add advanced controls when requested or justified by the product's needs, not as an automatic requirement for every app. For a person adapting their environment, start from the difficulty and choose the appropriate screen/OS/browser/app layer. Keep diagnosis, aesthetic preference, comfort, and measured barriers distinct.
 
 | Available material | Useful review | What remains unproven |
 | --- | --- | --- |
@@ -16,12 +18,15 @@ Establish the task from the available context. Identify whether the target is a 
 | Source repository | Shared causes, styles, markup, and existing checks. | Rendered outcomes unless the application can also be exercised. |
 | Running page or application | Available rendered states, styles, interaction, and supported checks. | Unvisited screens, unavailable accounts, other environments, and unperformed manual tests. |
 | Theme or appearance settings | Configured colors, text settings, and supported personal changes. | Effective rendering until observed, overrides, and behavior outside those settings. |
+| Display/OS/browser settings and user feedback | Supported adjustments, their scope, and reported task difficulty or comfort. | Physical luminance, reflections, panel flicker, medical cause, and individual benefit unless appropriately observed or assessed. |
 
 For an existing product, inventory the relevant page/screen and component families: navigation, content, forms, dialogs, tables, charts, and their variants. Include the themes the product actually offers and meaningful states such as focus, selected, expanded, validation error, loading, and empty. Inspect distinct implementations and backgrounds even when their colors have the same value. Record third-party embeds or canvas content that available tools cannot inspect.
 
 A whole-product request deserves a coverage plan across the product. Sampling may be necessary; say what was sampled and why. A single URL defaults to that page and its safe reachable states, not unlimited domain crawling. Prefer representative complete journeys in an approved test environment, without triggering real transactions. [WCAG-EM](https://www.w3.org/TR/wcag-em-2/) provides useful evaluation methodology; a sample is not proof about everything outside it.
 
 Record the date, target revision or URL, application/OS versions where relevant, viewport or window size, display/text scaling, theme, state, and tools actually used. Identify whether app evidence comes from a device, simulator, design, or supplied capture. Keep the playbook revision when available. Source inspection, manual browser checks, and automated results are different forms of evidence; do not present one as another. [WAI explains why automated tools cannot establish accessibility alone](https://www.w3.org/WAI/test-evaluate/tools/selecting/).
+
+For host extensions, inspect the current host contracts and the installed extension together. A framework migration, changed portal, renamed token, or new native preference can invalidate an old override without changing its source. Prefer the supported native capability and remove a redundant workaround only after checking the behavior it covered. Follow [Personalization implementation](references/personalization.md) for preview isolation, motion, lifecycle, state, and integration verification.
 
 ## Colors and previews
 
@@ -41,6 +46,8 @@ For rendered checks, use resolved styles or effective theme values and establish
 
 For CSS color spaces beyond sRGB, use a checker that supports the actual values or a documented conversion/fallback; preserve the color space and method. Do not treat OKLCH lightness as WCAG relative luminance. Check the actual exported values, not just an earlier candidate. A simulation of color-vision differences is a useful illustration, not a pass/fail certification.
 
+Model the actual compositing operation: an opaque `color-mix(in oklab, ...)` is not the same as interpolating sRGB channels or compositing a translucent foreground over a background. Match the renderer or verify effective rendered values. Account for cascade layers, inline styles, specificity, `!important`, and state-dependent overrides before treating a token value as an element's color.
+
 ### Work with the brand
 
 Keep locked logos and brand assets unchanged. Derive functional variants or change a foreground/background combination where needed. Text in a logotype has a specific text-contrast exception; ordinary UI text does not inherit it by using a brand color. Do not treat every decorative border as a required control boundary. Apply the criterion's actual scope and exceptions.
@@ -56,6 +63,8 @@ Show swatches **and** representative content: a paragraph, secondary text, link,
 Provide before/after values, intended combinations, measured ratios, and a short explanation of the trade-off. Unmeasured pairs must be marked pending, not given estimated passing numbers. Expose technical detail below the visual decision. The preview itself needs semantic text, named controls, visible keyboard focus, zoom support, and labels that do not rely on color. Avoid remote scripts, trackers, and unnecessary external assets.
 
 If rendering is unavailable, provide a palette table and an explicit preview brief, and say that no rendered preview was produced. After selection, use the target's existing style, token, or theme/settings format. Prefer [DTCG 2025.10](https://www.designtokens.org/tr/2025.10/format/) when a portable token exchange is needed, not as a required migration for every project.
+
+For a settings comparison, make each candidate independent of the currently applied profile. Reuse representative real components, including affected buttons, fields, focus, status indicators, and selection. When comparing luminous surfaces, allow a sequential full-surface trial rather than relying only on adjacent light/dark cards. The configurator's own appearance must honor the settings it offers. See [Personalization implementation](references/personalization.md) for the complete acceptance checks.
 
 ### Starter example
 
@@ -120,7 +129,7 @@ These are **project recommendations**, not automatic AA failures. Evaluate them 
 
 | Recommendation | How to use it |
 | --- | --- |
-| **Respect display and motion preferences** | Test relevant `prefers-reduced-motion`, `prefers-contrast`, and `forced-colors` behavior in the supported environment. Preserve useful borders/focus and system colors; do not globally opt out with `forced-color-adjust: none`. Test existing light/dark themes, but do not report the absence of dark mode as an AA failure. [Media Queries Level 5](https://www.w3.org/TR/mediaqueries-5/), [CSS Color Adjustment](https://www.w3.org/TR/css-color-adjust-1/). |
+| **Respect display and motion preferences** | Test relevant `prefers-color-scheme`, `prefers-reduced-motion`, `prefers-contrast`, `prefers-reduced-transparency`, and `forced-colors` behavior where supported; do not assume identical support across platforms. Preserve useful borders/focus and system colors; do not globally opt out with `forced-color-adjust: none`. Test existing light/dark themes, but do not report the absence of dark mode as an AA failure. A motion setting must cover affected CSS and JavaScript animations, not just CSS declarations. [Media Queries Level 5](https://www.w3.org/TR/mediaqueries-5/), [CSS Color Adjustment](https://www.w3.org/TR/css-color-adjust-1/). |
 | **Comfortable typography and stronger focus** | Review thin strokes, dense copy, and readability in actual fonts. Prefer a generous focus treatment. **2.4.13 Focus Appearance is AAA**, not AA; its area and contrast conditions are not simply a universal two-pixel-outline rule. Do not declare a WCAG failure solely because text is below 16 px. [Focus appearance](https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html). |
 | **Allow user color overrides** | Check that user-chosen text/background colors do not hide content or functionality. A built-in theme editor is not necessarily needed; platform or user-agent overrides can provide the adjustment. Inspired by the WCAG 3 draft's text-color-adjustable provision. [Dated draft](https://www.w3.org/TR/2026/WD-wcag-3.0-20260910/). |
 | **Do not degrade the pointer or rely on depth alone** | Prefer the platform pointer; where customized, verify that it remains findable and usable. Add an additional cue when visual depth is the only indication of meaning. These are useful ideas from the same WCAG 3 draft, not final WCAG 3 conformance tests. [Dated draft](https://www.w3.org/TR/2026/WD-wcag-3.0-20260910/). |
@@ -131,15 +140,15 @@ WCAG 3 remains work in progress at the source review below. Do not market a WCAG
 
 ### Match the review to the target
 
-For a **product interface**, inspect the design, code, or running app within scope. For a **personal workspace**, inspect the user's editor, terminal, or other application's supported appearance settings. Keep personal preferences separate from product-source changes and shared project settings.
+For a **product interface**, inspect the design, code, or running app within scope, distinguishing the accessible baseline from any requested advanced controls. For a **personal workspace**, inspect the relevant display, OS, browser, editor, terminal, or other application's supported visual settings. Keep personal preferences separate from product-source changes and shared project settings. Use the four-layer inventory and task-based workflow in [Visual needs](references/visual-needs.md).
 
 Apply the common visual checks to desktop and mobile apps using [WCAG2ICT](https://www.w3.org/TR/wcag2ict/), an informative interpretation of WCAG for non-web software, and relevant official platform guidance: [Apple](https://developer.apple.com/design/human-interface-guidelines/accessibility), [Android](https://developer.android.com/guide/topics/ui/accessibility), and [Windows](https://learn.microsoft.com/en-us/windows/apps/design/accessibility/accessibility-overview). Use browser inspection for web content and platform accessibility inspection for native controls. Do not require a DOM or ARIA from a native interface. For sizing and scaling, document the platform's units and their relationship to the criterion rather than equating screenshot pixels with CSS pixels. Converting CSS px to pt or dp is not enough and is not a direct normative equivalence: test the platform's own text scaling (such as Dynamic Type or the system font size), display scaling, and accessibility inspection on the target. Record which interpretation was used; runtime and assistive-technology checks remain pending until performed.
 
-A phone connection is optional. With supplied mobile screenshots, designs, or settings, offer a limited visual review and supported adjustment instructions. Check original color values when available; do not invent precise ratios from a capture. With authorized access to source, a simulator, or a device, extend the review to available states. Identify the evidence used, and keep untested touch, scaling, focus, and assistive-technology behavior pending. Connecting devices or changing system-wide settings requires separate authorization.
+A phone connection is optional. With supplied mobile screenshots, designs, or settings, offer a limited visual review and supported adjustment instructions. Check original color values when available; do not invent precise ratios from a capture. With authorized access to source, a simulator, or a device, extend the review to available states. Identify the evidence used, and keep untested touch, scaling, focus, and assistive-technology behavior pending. Device access and system-wide changes must be within the user's authorization; do not ask again for actions already included in the request.
 
 ### Personal themes and appearance
 
-Identify the application and version, active theme/profile, affected surfaces, and available settings. Consult the installed setting definitions or official documentation before proposing keys or file paths. Start from the current theme and use a small set of shared colors where possible.
+Identify the difficulty, representative tasks, platform/application versions, active theme/profile, affected surfaces, and available settings. Use the person's normal comfortable posture, correction, and viewing distance; monitor guidance is not a universal mobile or low-vision test condition. Consult the installed setting definitions or official documentation before proposing keys or file paths. Start from the current theme and use a small set of shared colors where possible. Do not infer physical screen brightness from a color code or a screenshot.
 
 | Area | Check in representative use |
 | --- | --- |
@@ -157,7 +166,7 @@ Show a representative code sample, diff, messages, and terminal output where rel
 
 Deliver the important changes and exact supported setting values, a theme fragment, or short UI instructions. Prefer personal settings or a dedicated profile; explain the affected scope and any known synchronization effects. Record old values, including whether a setting was absent, and a restoration method before applying approved changes. Preserve unrelated entries and file conventions instead of replacing an entire preferences file. Do not alter shared project settings unless explicitly included.
 
-Verify the effective result after application, including relevant overrides. User acceptance of a preview is not verification. When a visual barrier is confirmed but cannot be changed through supported settings, keep it as a finding with that limitation, rather than marking it fixed or hiding it. This review covers the inspected appearance and behavior, not the whole app or operating system.
+Verify the effective result after application, including relevant overrides. Separately compare representative task outcomes and the person's reported effort or comfort with the prior configuration, using comparable conditions. A short trial cannot establish all-day comfort. User acceptance of a preview is not technical verification, and a technical pass does not establish individual benefit. When a visual barrier is confirmed but cannot be changed through supported settings, keep it as a finding with that limitation, rather than marking it fixed or hiding it. This review covers the inspected appearance and behavior, not the whole app or operating system.
 
 ## Report
 
@@ -170,6 +179,8 @@ Suggested structure; omit empty sections rather than manufacturing findings:
 ```text
 # Accessibility review — [target]
 Scope: [target/platform, material, screens/journeys, size/scaling, theme, state, version/date]
+Route: [developer defaults / developer personalization / personal environment]
+Need and task: [functional difficulty and representative use, when relevant]
 
 ## Changes that matter
 1. [Outcome for users] — [shared cause, affected areas, proposed change]
@@ -187,6 +198,10 @@ Scope: [target/platform, material, screens/journeys, size/scaling, theme, state,
 
 ## After changes
 [Rechecked fixes, remaining failures, new issues, and changed coverage]
+
+## Personal adaptation outcome
+[When relevant: effective settings and scope; technical results;
+ user task/comfort feedback or pending trial; restore method]
 ```
 
 Lead with roughly three to five substantial changes when that is useful; it is not a quota or a cap. Include all material blockers. Prioritize blocked journeys and hard-to-perceive essential content over cosmetic refinements or raw finding counts. Keep smaller independent issues in the detail. Never imply that fixing the summary necessarily resolves every finding.
@@ -214,3 +229,5 @@ Source review: **2026-11-08** for WCAG 2.2 and its errata, WCAG2ICT, WCAG-EM 2.0
 [WCAG 2.2](https://www.w3.org/TR/WCAG22/) supplies the technical criteria referenced in the checklist. [WAI tutorials](https://www.w3.org/WAI/tutorials/) and the linked Understanding documents explain practical application. [WCAG-EM 2.0](https://www.w3.org/TR/wcag-em-2/) informs scope and evidence. [WCAG2ICT](https://www.w3.org/TR/wcag2ict/) helps interpret accessibility concepts outside the web; native applications also require platform-specific evaluation. The [applications and personal workspace](#applications-and-personal-workspace) section links the official editor references used for its examples. [WCAG 3's September 2026 draft](https://www.w3.org/TR/2026/WD-wcag-3.0-20260910/), still a Working Draft without a chosen contrast measure, informs the explicitly provisional recommendations above. [DTCG 2025.10](https://www.designtokens.org/tr/2025.10/format/) defines a portable token exchange format.
 
 Verify primary sources when updating guidance or resolving material ambiguity. Record changed recommendations in the commit and identify their basis as a published criterion, a project recommendation, or a draft idea.
+
+The functional and implementation references added on **2026-11-23** have their own sources and evidence labels: [Visual needs](references/visual-needs.md), [Personalization implementation](references/personalization.md), and [Visual evidence](references/visual-evidence.md). Their addition does not re-date the existing normative-source review above. Use [Evaluation scenarios](references/evaluations.md) to check that an agent applies the guidance without prior conversation context.
